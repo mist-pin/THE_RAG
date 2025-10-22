@@ -1,45 +1,37 @@
-from fastapi import APIRouter
-from pydantic import BaseModel
-from typing import List
-from core.logic import (
-    add_chunks,
-    query_chunks,
-    update_chunk,
-    delete_collection,
-    list_collections
+from fastapi import APIRouter, HTTPException
+from vector_store.core.logic import (
+    add_chunks_to_db,
+    query_similar_chunks,
+    update_existing_chunk,
+    delete_collection_data
 )
 
 router = APIRouter()
 
-class AddChunksRequest(BaseModel):
-    collection_name: str
-    chunks: List[str]
-
-class QueryRequest(BaseModel):
-    collection_name: str
-    query_text: str
-
-class UpdateRequest(BaseModel):
-    collection_name: str
-    chunk_id: str
-    new_text: str
-
 @router.post("/add_chunks")
-def add_chunks_endpoint(data: AddChunksRequest):
-    return add_chunks(data.collection_name, data.chunks)
+def add_chunks_endpoint(payload: dict):
+    try:
+        return add_chunks_to_db(payload)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/query_chunks")
-def query_chunks_endpoint(data: QueryRequest):
-    return query_chunks(data.collection_name, data.query_text)
+def query_chunks_endpoint(payload: dict):
+    try:
+        return query_similar_chunks(payload)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.put("/update_chunk")
-def update_chunk_endpoint(data: UpdateRequest):
-    return update_chunk(data.collection_name, data.chunk_id, data.new_text)
+def update_chunk_endpoint(payload: dict):
+    try:
+        return update_existing_chunk(payload)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.delete("/delete_collection/{collection_name}")
 def delete_collection_endpoint(collection_name: str):
-    return delete_collection(collection_name)
-
-@router.get("/list_collections")
-def list_collections_endpoint():
-    return list_collections()
+    try:
+        return delete_collection_data(collection_name)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
