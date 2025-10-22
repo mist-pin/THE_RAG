@@ -1,3 +1,3 @@
-# utils/constants.py
-CHROMA_PERSIST_DIR = "./chroma_db"
-EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+# Constants for model names, default collection names, etc.
+DEFAULT_COLLECTION = "project_docs"
+DEFAULT_MODEL = "all-MiniLM-L6-v2"
