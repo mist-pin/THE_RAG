@@ -1,0 +1,9 @@
+tiktoken
+spacy
+PyPDF2
+python-docx
+google-generativeai
+python-dotenv
+fastapi
+uvicorn
+python-multipart
