@@ -1,0 +1,14 @@
+# Core Dependencies
+langgraph>=0.2.0
+langchain>=0.3.0
+langchain-core>=0.3.0
+requests>=2.31.0
+
+# Vector DB clients (choose based on your DB)
+# pinecone-client>=3.0.0
+# weaviate-client>=4.0.0
+# qdrant-client>=1.7.0
+# chromadb>=0.4.0
+
+# Utilities
+python-dotenv>=1.0.0
